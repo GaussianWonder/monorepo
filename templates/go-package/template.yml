@@ -1,0 +1,17 @@
+title: "Go Package"
+description: "Creates a new go package with moon configuration"
+destination: "packages/{{ name }}"
+
+variables:
+  name:
+    type: "string"
+    prompt: "What is the name of your application?"
+    required: true
+  description:
+    type: "string"
+    prompt: "What is the description of your application?"
+    required: true
+  author:
+    type: "string"
+    default: "Virghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)"
+    internal: true

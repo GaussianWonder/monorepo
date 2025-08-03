@@ -14,3 +14,8 @@ node:
 typescript:
   syncProjectReferences: true
   syncProjectReferencesToPaths: true
+
+unstable_go:
+  version: "1.24"
+  tidyOnChange: true
+  workspaces: true

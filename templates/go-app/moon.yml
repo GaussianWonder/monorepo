@@ -1,0 +1,18 @@
+$schema: "https://moonrepo.dev/schemas/project.json"
+
+type: application
+language: "go"
+
+project:
+  name: "{{ name }}"
+  description: "{{ description }}"
+
+fileGroups:
+  sources:
+    - "go.mod"
+    - "**/*.go"
+
+tasks:
+  build:
+    outputs:
+      - "bin/{{ name }}"

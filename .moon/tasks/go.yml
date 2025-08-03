@@ -1,0 +1,27 @@
+tasks:
+  build:
+    command: 'go build -o @out(0)'
+    inputs:
+      - '@globs(sources)'
+  dev:
+    command: 'go run main.go'
+    inputs:
+      - '@globs(sources)'
+    local: true
+  format:
+    command: 'go fmt ./...'
+    inputs:
+      - '@globs(sources)'
+  lint:
+    command: 'staticcheck'
+    inputs:
+      - '@globs(sources)'
+      - 'staticcheck.conf'
+  test:
+    command: 'go test'
+    inputs:
+      - '@globs(sources)'
+  vet:
+    command: 'go vet'
+    inputs:
+      - '@globs(sources)'
