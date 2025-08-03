@@ -1,27 +1,30 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/tasks.json
+$schema: "https://moonrepo.dev/schemas/tasks.json"
+
 tasks:
   build:
-    command: 'go build -o @out(0)'
+    command: "go build -o @out(0)"
     inputs:
-      - '@globs(sources)'
+      - "@globs(sources)"
   dev:
-    command: 'go run main.go'
+    command: "go run main.go"
     inputs:
-      - '@globs(sources)'
+      - "@globs(sources)"
     local: true
   format:
-    command: 'go fmt ./...'
+    command: "go fmt ./..."
     inputs:
-      - '@globs(sources)'
+      - "@globs(sources)"
   lint:
-    command: 'staticcheck'
+    command: "staticcheck"
     inputs:
-      - '@globs(sources)'
-      - 'staticcheck.conf'
+      - "@globs(sources)"
+      - "staticcheck.conf"
   test:
-    command: 'go test'
+    command: "go test"
     inputs:
-      - '@globs(sources)'
+      - "@globs(sources)"
   vet:
-    command: 'go vet'
+    command: "go vet"
     inputs:
-      - '@globs(sources)'
+      - "@globs(sources)"
