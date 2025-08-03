@@ -1,6 +1,11 @@
-# Typescript Moon
+# TypeScript Moon
 
-Opinionated template to kick-start moon projects with TypeScript, moon workspace management, and code generation templates.
+Opinionated template to kick-start moon projects with moon workspace management, and code generation templates.
+
+- **Primary focus: TypeScript**
+   > Full-featured TypeScript support with comprehensive tooling
+- **Secondary support: Go**
+   > Basic Go project scaffolding with workspace integration
 
 > See [moonrepo](https://moonrepo.dev/)
 
@@ -19,12 +24,16 @@ Opinionated template to kick-start moon projects with TypeScript, moon workspace
 4. Install dependencies
     - `proto install`
     - `pnpm install`
-5. Generate your first project: `moon generate node-app` or `moon generate node-package`
+5. Generate your first project:
+    - TypeScript: `moon generate node-app` or `moon generate node-package`
+    - Go: `moon generate go-app` or `moon generate go-package`
 6. Sync apps and packages: `moon sync`
 
 ## Project Templates
 
-This repository includes two code generation templates:
+This repository includes code generation templates for both TypeScript and Go:
+
+## TypeScript Templates (Primary)
 
 ### `node-app` - TypeScript Application
 
@@ -57,15 +66,60 @@ Creates a TypeScript package/library with:
 moon generate node-package
 ```
 
+## Go Templates (Secondary)
+
+### `go-app` - Go Application
+
+Creates a Go application with:
+
+- Go module configuration
+- Moon workspace integration
+- Basic project structure
+
+**Usage:**
+
+```bash
+moon generate go-app
+```
+
+### `go-package` - Go Package/Library
+
+Creates a Go package/library with:
+
+- Go module configuration
+- Moon workspace integration
+- Library-optimized structure
+
+**Usage:**
+
+```bash
+moon generate go-package
+```
+
+### ⚠️ Important: Go Workspace Management
+
+After generating any Go project, you must add it to the workspace:
+
+```bash
+# From the repository root
+go work use apps/your-go-app-name
+# or
+go work use packages/your-go-package-name
+```
+
+This ensures proper Go module resolution across your workspace.
+
 ## Customization
 
 ### Before Using This Template
 
 **⚠️ IMPORTANT**: Update these internal variables before usage:
 
-1. **Author Information**: Update the default author in both template files:
+1. **Author Information**: Update the default author in all template files:
    - `templates/node-app/template.yml`
    - `templates/node-package/template.yml`
+   - `templates/go-app/template.yml`
+   - `templates/go-package/template.yml`
 
    Change the `author.default` value from:
 
