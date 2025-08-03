@@ -11,3 +11,11 @@ variables:
     type: "string"
     prompt: "What is the description of your application?"
     required: true
+  author:
+    type: "string"
+    default: "Virghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)"
+    internal: true
+  license:
+    type: "string"
+    default: "ISC"
+    internal: true
