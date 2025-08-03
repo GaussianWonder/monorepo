@@ -1,0 +1,6 @@
+{
+  "extends": "tsconfig-moon/tsconfig.projects.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": false
+  }
+}

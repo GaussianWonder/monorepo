@@ -1,0 +1,9 @@
+{
+  "name": "package",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "author": "Virghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)",
+  "license": "ISC"
+}

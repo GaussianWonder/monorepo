@@ -1,0 +1,117 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "recommended": true,
+        "noExtraBooleanCast": "warn",
+        "noStaticOnlyClass": "off",
+        "noThisInStatic": "error",
+        "noUselessCatch": "error",
+        "noUselessSwitchCase": "warn",
+        "noUselessTernary": "warn",
+        "useArrowFunction": "error",
+        "useLiteralKeys": "warn",
+        "useSimplifiedLogicExpression": "warn"
+      },
+      "correctness": {
+        "recommended": true,
+        "noNodejsModules": "off",
+        "useIsNan": "error",
+        "useYield": "error"
+      },
+      "performance": {
+        "recommended": true,
+        "noAccumulatingSpread": "error"
+      },
+      "style": {
+        "recommended": true,
+        "noDefaultExport": "off",
+        "noNegationElse": "error",
+        "noNonNullAssertion": "warn",
+        "noShoutyConstants": "error",
+        "noUnusedTemplateLiteral": "error",
+        "noUselessElse": "error",
+        "useConsistentArrayType": "error",
+        "useConst": "error",
+        "useExportType": "error",
+        "useFilenamingConvention": "error",
+        "useImportType": "error",
+        "useNamingConvention": "off",
+        "useNodejsImportProtocol": "error",
+        "useNumberNamespace": "error",
+        "useShorthandAssign": "error",
+        "useShorthandFunctionType": "error",
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noInferrableTypes": "error",
+        "noSubstr": "error",
+        "useDeprecatedReason": "error"
+      },
+      "suspicious": {
+        "recommended": true,
+        "noCatchAssign": "error",
+        "noDoubleEquals": "error",
+        "noExplicitAny": "warn",
+        "noFallthroughSwitchClause": "off",
+        "noGlobalIsFinite": "error",
+        "useAwait": "warn",
+        "useIsArray": "error",
+        "useDefaultSwitchClauseLast": "error",
+        "noVar": "error"
+      },
+      "nursery": {
+        "recommended": true
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "lineEnding": "lf",
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "quoteStyle": "double",
+      "bracketSpacing": true,
+      "arrowParentheses": "asNeeded"
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "trailingCommas": "none"
+    },
+    "linter": {
+      "enabled": true
+    },
+    "parser": {
+      "allowComments": true
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}

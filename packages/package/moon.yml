@@ -1,0 +1,24 @@
+$schema: "https://moonrepo.dev/schemas/project.json"
+
+type: library
+platform: node
+language: "typescript"
+
+project:
+  name: "package"
+  description: "Typescript package example"
+
+fileGroups:
+  sources:
+    - "src/**/*"
+  generated:
+    - "src/generated/**"
+
+tasks:
+  build:
+    outputs:
+      - "@group(generated)"
+
+  typecheck:
+    outputs:
+      - "lib"

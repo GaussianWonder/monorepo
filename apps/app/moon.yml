@@ -1,0 +1,44 @@
+$schema: "https://moonrepo.dev/schemas/project.json"
+
+type: application
+platform: node
+language: "typescript"
+
+project:
+  name: "app"
+  description: "Node app example"
+
+fileGroups:
+  sources:
+    - "src/**/*"
+
+tasks:
+  typecheck:
+    outputs:
+      - "tsconfig.tsbuildinfo"
+
+  bundle:
+    command:
+      - "esbuild"
+      - "src/index.ts"
+      - "--bundle"
+      - "--platform=node"
+      - "--target=node20"
+      - "--outfile=out/index.js"
+      - "--minify"
+      - "--sourcemap"
+    deps:
+      - "typecheck"
+    inputs:
+      - "@group(sources)"
+      - "tsconfig.json"
+    outputs:
+      - "out"
+
+  dev:
+    command:
+      - "tsx"
+      - "src/index.ts"
+    deps:
+      - "typecheck"
+    local: true

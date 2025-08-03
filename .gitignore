@@ -1,0 +1,22 @@
+# moon
+.moon/cache
+.moon/docker
+
+node_modules
+**/node_modules/*
+
+# The `outDir` for declarations
+lib/
+# Build outputs
+dist/
+out/
+# Build cache manifests
+*.tsbuildinfo
+
+# Other assets
+storage/
+assets/
+
+.env
+**/.env
+

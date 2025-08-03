@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/workspace.json
+$schema: "https://moonrepo.dev/schemas/workspace.json"
+
+projects:
+  - "apps/*"
+  - "packages/*"
+
+pipeline:
+  autoCleanCache: true
+  cacheLifetime: "2 days"
