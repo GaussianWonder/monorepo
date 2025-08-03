@@ -5,11 +5,11 @@ destination: "packages/{{ name }}"
 variables:
   name:
     type: "string"
-    prompt: "What is the name of your application?"
+    prompt: "What is the name of your package?"
     required: true
   description:
     type: "string"
-    prompt: "What is the description of your application?"
+    prompt: "What is the description of your package?"
     required: true
   author:
     type: "string"
