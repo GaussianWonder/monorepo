@@ -5,8 +5,8 @@ platform: node
 language: "typescript"
 
 project:
-  name: "package"
-  description: "Typescript package example"
+  name: "{{ name }}"
+  description: "{{ description }}"
 
 fileGroups:
   sources:
@@ -22,3 +22,4 @@ tasks:
   typecheck:
     outputs:
       - "lib"
+

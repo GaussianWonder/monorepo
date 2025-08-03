@@ -1,0 +1,13 @@
+title: "Node.js Application"
+description: "Creates a new Node.js application with TypeScript and moon configuration"
+destination: "apps/{{ name }}"
+
+variables:
+  name:
+    type: "string"
+    prompt: "What is the name of your application?"
+    required: true
+  description:
+    type: "string"
+    prompt: "What is the description of your application?"
+    required: true

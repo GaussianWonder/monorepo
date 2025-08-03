@@ -5,8 +5,8 @@ platform: node
 language: "typescript"
 
 project:
-  name: "app"
-  description: "Node app example"
+  name: "{{ name }}"
+  description: "{{ description }}"
 
 fileGroups:
   sources:
