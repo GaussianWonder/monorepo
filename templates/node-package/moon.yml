@@ -11,15 +11,8 @@ project:
 fileGroups:
   sources:
     - "src/**/*"
-  generated:
-    - "src/generated/**"
 
 tasks:
-  build:
-    outputs:
-      - "@group(generated)"
-
   typecheck:
     outputs:
       - "lib"
-
