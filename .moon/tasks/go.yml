@@ -24,7 +24,7 @@ tasks:
     command: "go test"
     inputs:
       - "@globs(sources)"
-  vet:
+  typecheck:
     command: "go vet"
     inputs:
       - "@globs(sources)"
