@@ -11,8 +11,3 @@ fileGroups:
   sources:
     - "go.mod"
     - "**/*.go"
-
-tasks:
-  build:
-    outputs:
-      - "bin/{{ name }}"

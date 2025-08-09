@@ -6,6 +6,8 @@ tasks:
     command: "go build -o @out(0)"
     inputs:
       - "@globs(sources)"
+    outputs:
+      - "bin/main"
   dev:
     command: "go run main.go"
     inputs:
