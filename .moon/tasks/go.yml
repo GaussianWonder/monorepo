@@ -23,7 +23,7 @@ tasks:
       - "@globs(sources)"
       - "staticcheck.conf"
   test:
-    command: "go test"
+    command: "go test ./..."
     inputs:
       - "@globs(sources)"
   typecheck:
