@@ -41,7 +41,6 @@ Creates a Node.js application with:
 
 - TypeScript configuration with project references
 - Moon workspace integration
-- esbuild bundling setup
 - Development server with tsx
 - Type checking tasks
 

@@ -12,7 +12,6 @@ tasks:
     command: "go run main.go"
     inputs:
       - "@globs(sources)"
-    local: true
   format:
     command: "go fmt ./..."
     inputs:
