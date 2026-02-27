@@ -6,7 +6,7 @@
   "author": "Virghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)",
   "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
+    "@biomejs/biome": "2.4.4",
     "@types/node": "^25.3.2",
     "tsconfig-moon": "^1.4.2",
     "tsx": "^4.21.0",
