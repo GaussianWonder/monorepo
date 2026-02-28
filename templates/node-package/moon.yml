@@ -1,7 +1,8 @@
-$schema: "https://moonrepo.dev/schemas/project.json"
+# yaml-language-server: $schema=../../.moon/cache/schemas/project.json
+$schema: "../../.moon/cache/schemas/project.json"
 
-type: library
-platform: node
+# stack: unknown
+layer: library
 language: "typescript"
 
 project:

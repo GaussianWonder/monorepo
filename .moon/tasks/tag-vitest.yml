@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://moonrepo.dev/schemas/tasks.json
-$schema: "https://moonrepo.dev/schemas/tasks.json"
+# yaml-language-server: $schema=../cache/schemas/tasks.json
+$schema: "../cache/schemas/tasks.json"
 
-extends: 'https://raw.githubusercontent.com/moonrepo/moon-configs/master/javascript/vitest/tasks.yml'
+extends: "https://raw.githubusercontent.com/moonrepo/moon-configs/master/javascript/vitest/tasks.yml"

@@ -3,9 +3,9 @@
 Opinionated template to kick-start moon projects with moon workspace management, and code generation templates.
 
 - **Primary focus: TypeScript**
-   > Full-featured TypeScript support with comprehensive tooling
+  > Full-featured TypeScript support with comprehensive tooling
 - **Secondary support: Go**
-   > Basic Go project scaffolding with workspace integration
+  > Basic Go project scaffolding with workspace integration
 
 > See [moonrepo](https://moonrepo.dev/)
 
@@ -22,12 +22,13 @@ Opinionated template to kick-start moon projects with moon workspace management,
 2. **IMPORTANT**: Update internal template variables (see [Customization](#customization))
 3. **IMPORTANT**: Update or replace the LICENSE file with your own
 4. Install dependencies
-    - `proto install`
-    - `pnpm install`
-5. Generate your first project:
-    - TypeScript: `moon generate node-app` or `moon generate node-package`
-    - Go: `moon generate go-app` or `moon generate go-package`
-6. Sync apps and packages: `moon sync`
+   - `proto install`
+   - `pnpm install`
+5. Sync configs: `moon sync config-schemas`
+6. Generate your first project:
+   - TypeScript: `moon generate node-app` or `moon generate node-package`
+   - Go: `moon generate go-app` or `moon generate go-package`
+7. Sync apps and packages: `moon sync`
 
 ## Project Templates
 
@@ -134,7 +135,7 @@ This ensures proper Go module resolution across your workspace.
    ```yaml
    license:
      type: "string"
-     default: "ISC"  # Change this if you prefer a different license
+     default: "ISC" # Change this if you prefer a different license
      internal: true
    ```
 
