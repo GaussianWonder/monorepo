@@ -1,0 +1,44 @@
+{
+  "lsp": {
+    "typescript-language-server": {
+      "initialization_options": {
+        "tsserver": {
+          "path": "node_modules/typescript/lib/tsserver.js",
+        },
+      },
+    },
+  },
+  "file_scan_exclusions": [
+    "**/*.tsbuildinfo",
+    ".moon/cache",
+    ".moon/docker",
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/node_modules",
+    "**/dist",
+    "**/lib",
+    "**/out",
+    "**/*.code-search",
+  ],
+  "format_on_save": "on",
+  "languages": {
+    "TypeScript": {
+      "formatter": {
+        "language_server": { "name": "biome" },
+      },
+      "code_actions_on_format": {
+        "source.organizeImports.biome": true,
+        "source.fixAll.biome": true,
+      },
+    },
+    "JSON": {
+      "formatter": {
+        "language_server": { "name": "biome" },
+      },
+    },
+  },
+}
