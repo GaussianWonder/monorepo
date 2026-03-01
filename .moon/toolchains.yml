@@ -11,6 +11,9 @@ node:
   syncPackageManagerField: true
   syncProjectWorkspaceDependencies: true
 
+pnpm:
+  version: 10.30.3
+
 typescript:
   includeProjectReferenceSources: true
   includeSharedTypes: true
