@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../cache/schemas/tasks.json
 $schema: "../cache/schemas/tasks.json"
 
-extends: "https://raw.githubusercontent.com/moonrepo/moon-configs/master/javascript/vitest/tasks.yml"
-
 inheritedBy:
-  language: typescript
+  languages: [javascript, typescript]
+  toolchains: [node]
+
+extends: "https://raw.githubusercontent.com/moonrepo/moon-configs/master/javascript/vitest/tasks.yml"

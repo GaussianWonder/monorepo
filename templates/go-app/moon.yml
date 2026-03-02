@@ -4,8 +4,6 @@ $schema: "../../.moon/cache/schemas/project.json"
 # stack: unknown
 layer: application
 language: "go"
-toolchains:
-  default: go
 
 project:
   name: "{{ name }}"

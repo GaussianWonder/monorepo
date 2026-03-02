@@ -2,33 +2,42 @@
 $schema: "../cache/schemas/tasks.json"
 
 inheritedBy:
-  toolchain: go
+  languages: [go]
+  toolchains: [go]
 
 tasks:
   build:
-    command: "go build -o @out(0)"
+    script: "go build -o @out(0)"
+    type: build
     inputs:
       - "@globs(sources)"
     outputs:
       - "bin/main"
   dev:
-    command: "go run main.go"
+    script: "go run main.go"
+    preset: server
     inputs:
       - "@globs(sources)"
   format:
-    command: "go fmt ./..."
+    script: "go fmt ./..."
+    type: test
     inputs:
       - "@globs(sources)"
   lint:
-    command: "staticcheck"
+    script: "staticcheck"
+    type: test
     inputs:
       - "@globs(sources)"
       - "staticcheck.conf"
+  check:
+    deps: ["lint", "format"]
   test:
-    command: "go test ./..."
+    script: "go test ./..."
+    type: test
     inputs:
       - "@globs(sources)"
   typecheck:
-    command: "go vet"
+    script: "go vet"
+    type: build
     inputs:
       - "@globs(sources)"

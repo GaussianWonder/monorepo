@@ -1,0 +1,10 @@
+fileGroups:
+  configs:
+    - "*.config.{js,cjs,mjs,ts}"
+    - "*.json"
+  sources:
+    - "src/**/*"
+    - "types/**/*"
+  tests:
+    - "tests/**/*"
+    - "**/__tests__/**/*"

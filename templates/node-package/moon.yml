@@ -4,18 +4,17 @@ $schema: "../../.moon/cache/schemas/project.json"
 # stack: unknown
 layer: library
 language: "typescript"
-toolchains:
-  default: node
 
 project:
   name: "{{ name }}"
   description: "{{ description }}"
 
+workspace:
+  inheritedTasks:
+    exclude:
+      - bundle
+
 fileGroups:
   sources:
-    - "src/**/*"
-
-tasks:
-  typecheck:
-    outputs:
-      - "lib"
+    - glob: "src/**/*"
+  tests: []

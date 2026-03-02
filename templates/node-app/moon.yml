@@ -4,8 +4,6 @@ $schema: "../../.moon/cache/schemas/project.json"
 # stack: unknown
 layer: application
 language: "typescript"
-toolchains:
-  default: node
 
 project:
   name: "{{ name }}"
@@ -13,34 +11,5 @@ project:
 
 fileGroups:
   sources:
-    - "src/**/*"
-
-tasks:
-  typecheck:
-    outputs:
-      - "tsconfig.tsbuildinfo"
-
-  bundle:
-    command:
-      - "esbuild"
-      - "src/index.ts"
-      - "--bundle"
-      - "--platform=node"
-      - "--target=node20"
-      - "--outfile=out/index.js"
-      - "--minify"
-      - "--sourcemap"
-    deps:
-      - "typecheck"
-    inputs:
-      - "@group(sources)"
-      - "tsconfig.json"
-    outputs:
-      - "out"
-
-  dev:
-    command:
-      - "tsx"
-      - "src/index.ts"
-    deps:
-      - "typecheck"
+    - glob: "src/**/*"
+  tests: []

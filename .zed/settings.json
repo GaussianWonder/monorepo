@@ -3,10 +3,10 @@
     "typescript-language-server": {
       "initialization_options": {
         "tsserver": {
-          "path": "node_modules/typescript/lib/tsserver.js",
-        },
-      },
-    },
+          "path": "node_modules/typescript/lib/tsserver.js"
+        }
+      }
+    }
   },
   "file_scan_exclusions": [
     "**/*.tsbuildinfo",
@@ -22,23 +22,23 @@
     "**/dist",
     "**/lib",
     "**/out",
-    "**/*.code-search",
+    "**/*.code-search"
   ],
   "format_on_save": "on",
   "languages": {
     "TypeScript": {
       "formatter": {
-        "language_server": { "name": "biome" },
+        "language_server": { "name": "biome" }
       },
       "code_actions_on_format": {
         "source.organizeImports.biome": true,
-        "source.fixAll.biome": true,
-      },
+        "source.fixAll.biome": true
+      }
     },
     "JSON": {
       "formatter": {
-        "language_server": { "name": "biome" },
-      },
-    },
-  },
+        "language_server": { "name": "biome" }
+      }
+    }
+  }
 }

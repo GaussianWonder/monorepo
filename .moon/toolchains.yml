@@ -2,13 +2,13 @@
 $schema: "./cache/schemas/toolchains.json"
 
 node:
-  version: 24.14.0
-  addEnginesConstraint: true
+  version: 25.7.0
+  syncVersionManagerConfig: nodenv
+
+javascript:
   dedupeOnLockfileChange: true
+  inferTasksFromScripts: true
   packageManager: pnpm
-  pnpm:
-    version: 10.30.3
-  syncPackageManagerField: true
   syncProjectWorkspaceDependencies: true
 
 pnpm:

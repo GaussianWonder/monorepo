@@ -2,19 +2,51 @@
 $schema: "../cache/schemas/tasks.json"
 
 inheritedBy:
-  toolchain: node
+  languages: [javascript, typescript]
+  toolchains: [node]
 
 tasks:
   typecheck:
-    command:
-      - "tsc"
-      - "--build"
-      - "--pretty"
-      - "--verbose"
+    script: tsc --build --pretty --verbose
+    type: build
     inputs:
-      - "src/**/*"
-      - "tests/**/*"
-      - "types/**/*"
+      - "@globs(sources)"
+      - "@globs(tests)"
       - "tsconfig.json"
       - "tsconfig.*.json"
       - "/tsconfig.options.json"
+    outputs:
+      - file: "tsconfig.tsbuildinfo"
+        optional: true
+      - glob: "lib/**/*"
+        optional: true
+  build:
+    command: "tsdown"
+    args: ["--target", "node25"]
+    type: build
+    inputs:
+      - "@globs(sources)"
+      - "tsconfig.json"
+      - "tsconfig.*.json"
+      - "/tsconfig.options.json"
+    outputs:
+      - glob: "dist/**/*"
+  bundle:
+    command: tsdown
+    args: ["--sourcemap", "--minify", "--target", "node25"]
+    type: build
+    inputs:
+      - "@globs(sources)"
+      - "tsconfig.json"
+      - "tsconfig.*.json"
+      - "/tsconfig.options.json"
+    outputs:
+      - "dist/**/*"
+  dev:
+    command: tsx
+    args: ["src/index.ts"]
+    deps:
+      - typecheck
+  check:
+    command: biome
+    args: ["check", "--write"]
