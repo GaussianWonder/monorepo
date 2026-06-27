@@ -5,7 +5,7 @@ destination: "apps/{{ name }}"
 variables:
   name:
     type: "string"
-    prompt: "What is the name of your application?"
+    prompt: "Application name (no hyphens, valid Go identifier, e.g. 'myapp')?"
     required: true
   description:
     type: "string"

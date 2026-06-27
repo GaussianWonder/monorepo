@@ -1,13 +1,9 @@
-# TypeScript Moon
+# Monorepo
 
-Opinionated template to kick-start moon projects with moon workspace management, and code generation templates.
+Opinionated monorepo powered by [moon](https://moonrepo.dev/) and [proto](https://moonrepo.dev/proto) with code generation templates, unified build pipelines, and dependency version management.
 
-- **Primary focus: TypeScript**
-  > Full-featured TypeScript support with comprehensive tooling
-- **Secondary support: Go**
-  > Basic Go project scaffolding with workspace integration
-
-> See [moonrepo](https://moonrepo.dev/)
+- **Primary focus: TypeScript** (Node 26, TypeScript 6)
+- **Secondary support: Go** (Go 1.26)
 
 ## Getting Started
 
@@ -24,131 +20,150 @@ Opinionated template to kick-start moon projects with moon workspace management,
 4. Install dependencies
    - `proto install`
    - `pnpm install`
-5. Sync configs: `moon sync config-schemas`
-6. Generate your first project:
+5. Prepare tooling
+   - Go: `moon run root:prepare-go`
+6. Sync configs: `moon sync config-schemas`
+7. Generate your first project:
    - TypeScript: `moon generate node-app` or `moon generate node-package`
    - Go: `moon generate go-app` or `moon generate go-package`
-7. Sync apps and packages: `moon sync`
+8. Sync apps and packages: `moon sync`
+
+## Project Structure
+
+```
+apps/          # Applications (entry points, deployable artifacts)
+packages/      # Shared libraries (consumed by apps and other packages)
+infra/         # Infrastructure tooling
+tests/         # Test apps, toy projects, and POCs
+templates/     # Moon code generation templates
+.moon/         # Moon workspace and task configuration
+```
+
+## TypeScript Tooling
+
+### Build Pipeline
+
+All TypeScript projects inherit shared tasks from `.moon/tasks/node.yml`. Source files live in `src/`, build output goes to `dist/`.
+
+| Task         | Command                                    | Purpose                                          |
+| ------------ | ------------------------------------------ | ------------------------------------------------ |
+| `dev`        | `tsx src/index.ts`                         | Run from source with typechecking                |
+| `typecheck`  | `tsc --build`                              | Type checking with project references            |
+| `build`      | `tsdown --sourcemap`                       | Build with sourcemaps and type declarations      |
+| `bundle`     | `tsdown --sourcemap --minify --no-dts`     | Minified production bundle, no type declarations |
+| `start`      | `node --enable-source-maps dist/index.mjs` | Run the `build` output                           |
+| `start-prod` | `node --enable-source-maps dist/index.mjs` | Run the `bundle` output                          |
+| `check`      | `biome check --write`                      | Lint and format                                  |
+
+`start` and `start-prod` automatically build workspace dependencies (`^:build`) before running.
+
+### Apps vs Packages
+
+**Packages** produce importable libraries. Their `build` output includes type declarations (`.d.mts`) and externalizes `dependencies` by default. Packages exclude the `bundle` task since they are not standalone executables.
+
+**Apps** produce runnable artifacts. `build` is the same as packages. `bundle` creates a single-file minified output with all dependencies inlined (`alwaysBundle: ["**"]` in `package.json`).
+
+### Bundling and Native Packages
+
+Apps bundle all dependencies by default via the `tsdown` config in `package.json`:
+
+```json
+{
+  "tsdown": {
+    "deps": {
+      "alwaysBundle": ["**"]
+    }
+  }
+}
+```
+
+For native packages that cannot be bundled (e.g. `better-sqlite3`), exclude them per-app:
+
+```json
+{
+  "dependencies": {
+    "better-sqlite3": "^11.0.0"
+  },
+  "tsdown": {
+    "deps": {
+      "alwaysBundle": ["**"],
+      "neverBundle": ["better-sqlite3"]
+    }
+  }
+}
+```
+
+Externalized packages must be declared in the app's `dependencies` so they are available in `node_modules` at runtime.
+
+Packages do not need any `tsdown` config. Dependencies listed in `package.json` `dependencies` are externalized by default.
+
+### TypeScript Configuration
+
+The tsconfig chain is:
+
+```
+tsconfig-moon/tsconfig.projects.json   (base: strict, composite, declarations)
+  -> tsconfig.options.json             (overrides: es2025, nodenext, types: ["node"])
+    -> <project>/tsconfig.json         (project-specific: rootDir, outDir)
+```
+
+`@types/node` is installed at the root and made available to all projects via `types: ["node"]` in `tsconfig.options.json`. Projects that need different types (e.g. React, Next.js) can override `types` in their own `tsconfig.json` — the field fully replaces the parent.
+
+### Dependency Version Management
+
+[syncpack](https://syncpack.dev/) enforces consistent dependency versions across all `package.json` files.
+
+| Task               | Command                           | Purpose                           |
+| ------------------ | --------------------------------- | --------------------------------- |
+| `syncpack-check`   | `syncpack lint`                   | Check for version mismatches (CI) |
+| `syncpack-fix`     | `syncpack fix`                    | Auto-fix version mismatches       |
+| `syncpack-update`  | `syncpack update --target minor`  | Safe minor/patch updates          |
+| `syncpack-upgrade` | `syncpack update --target latest` | Full upgrade including majors     |
+
+Run from root: `moon run root:syncpack-check`
+
+Configuration (`.syncpackrc.json`):
+
+- Enforces `^` semver ranges across all packages
+- Uses `workspace:*` protocol for local package references
+- Sources auto-discovered from `pnpm-workspace.yaml`
 
 ## Project Templates
 
-This repository includes code generation templates for both TypeScript and Go:
+### TypeScript
 
-## TypeScript Templates (Primary)
+| Template       | Command                      | Creates                                                     |
+| -------------- | ---------------------------- | ----------------------------------------------------------- |
+| `node-app`     | `moon generate node-app`     | Application with bundling, start tasks, and `tsdown` config |
+| `node-package` | `moon generate node-package` | Library with type declarations and package exports          |
 
-### `node-app` - TypeScript Application
+### Go
 
-Creates a Node.js application with:
+| Template     | Command                    | Creates                           |
+| ------------ | -------------------------- | --------------------------------- |
+| `go-app`     | `moon generate go-app`     | Go application with module config |
+| `go-package` | `moon generate go-package` | Go library with module config     |
 
-- TypeScript configuration with project references
-- Moon workspace integration
-- Development server with tsx
-- Type checking tasks
-
-**Usage:**
-
-```bash
-moon generate node-app
-```
-
-### `node-package` - TypeScript Package/Library
-
-Creates a TypeScript package/library with:
-
-- TypeScript configuration optimized for libraries
-- Moon workspace integration
-- Generated files support
-- JSDoc documentation structure
-
-**Usage:**
+After generating a Go project, add it to the workspace:
 
 ```bash
-moon generate node-package
-```
-
-## Go Templates (Secondary)
-
-### `go-app` - Go Application
-
-Creates a Go application with:
-
-- Go module configuration
-- Moon workspace integration
-- Basic project structure
-
-**Usage:**
-
-```bash
-moon generate go-app
-```
-
-### `go-package` - Go Package/Library
-
-Creates a Go package/library with:
-
-- Go module configuration
-- Moon workspace integration
-- Library-optimized structure
-
-**Usage:**
-
-```bash
-moon generate go-package
-```
-
-### ⚠️ Important: Go Workspace Management
-
-After generating any Go project, you must add it to the workspace:
-
-```bash
-# From the repository root
-go work use apps/your-go-app-name
+go work use apps/yourgoappname
 # or
-go work use packages/your-go-package-name
+go work use packages/yourgopackagename
 ```
 
-This ensures proper Go module resolution across your workspace.
+## Prepare Tasks
+
+Root-level tasks that install language-specific tooling not managed by proto. Run once after cloning, or in CI before build steps.
+
+| Task         | Command                    | Installs                                                     |
+| ------------ | -------------------------- | ------------------------------------------------------------ |
+| `prepare-go` | `moon run root:prepare-go` | [staticcheck](https://staticcheck.dev/) (Go static analysis) |
 
 ## Customization
 
 ### Before Using This Template
 
-**⚠️ IMPORTANT**: Update these internal variables before usage:
-
-1. **Author Information**: Update the default author in all template files:
-   - `templates/node-app/template.yml`
-   - `templates/node-package/template.yml`
-   - `templates/go-app/template.yml`
-   - `templates/go-package/template.yml`
-
-   Change the `author.default` value from:
-
-   ```yaml
-   author:
-     type: "string"
-     default: "Virghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)"
-     internal: true
-   ```
-
-2. **License**: Update the default license if needed:
-
-   ```yaml
-   license:
-     type: "string"
-     default: "ISC" # Change this if you prefer a different license
-     internal: true
-   ```
-
-3. **LICENSE File**: Replace the root LICENSE file and template LICENSE files with your own license
-
-### Template Variables
-
-When generating projects, you'll be prompted for:
-
-- **name**: Project/package name (required)
-- **description**: Project/package description (required)
-
-These variables are automatically set (no prompting):
-
-- **author**: Uses the default from template.yml
-- **license**: Uses the default from template.yml
+1. **Author Information**: Update `author.default` in all `templates/*/template.yml` files
+2. **License**: Update `license.default` in template files if needed
+3. **LICENSE File**: Replace root and template LICENSE files with your own

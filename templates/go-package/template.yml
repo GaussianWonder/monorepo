@@ -5,7 +5,7 @@ destination: "packages/{{ name }}"
 variables:
   name:
     type: "string"
-    prompt: "What is the name of your package?"
+    prompt: "Package name (no hyphens, valid Go identifier, e.g. 'testpkg')?"
     required: true
   description:
     type: "string"

@@ -32,6 +32,7 @@
     "**/.DS_Store",
     "**/Thumbs.db",
     "**/node_modules",
+    "**/bin",
     "**/dist",
     "**/lib",
     "**/out",

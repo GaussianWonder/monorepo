@@ -5,30 +5,44 @@ inheritedBy:
   languages: [go]
   toolchains: [go]
 
+fileGroups:
+  sources:
+    - glob: "**/*.go"
+    - file: "go.mod"
+    - file: "go.sum"
+
 tasks:
   build:
-    script: "go build -o @out(0)"
+    script: "go build -o bin/ ."
     type: build
     inputs:
       - "@globs(sources)"
     outputs:
-      - "bin/main"
+      - glob: "bin/*"
   dev:
-    script: "go run main.go"
-    preset: server
+    script: "go run ."
     inputs:
       - "@globs(sources)"
+  start:
+    script: "go run ."
+    deps:
+      - build
+    options:
+      runInCI: false
   format:
     script: "go fmt ./..."
     type: test
     inputs:
       - "@globs(sources)"
   lint:
-    script: "staticcheck"
+    script: "staticcheck ./..."
+    deps:
+      - "root:prepare-go"
     type: test
     inputs:
       - "@globs(sources)"
-      - "staticcheck.conf"
+      - file: "staticcheck.conf"
+        optional: true
   check:
     deps: ["lint", "format"]
   test:
@@ -37,7 +51,7 @@ tasks:
     inputs:
       - "@globs(sources)"
   typecheck:
-    script: "go vet"
+    script: "go vet ./..."
     type: build
     inputs:
       - "@globs(sources)"

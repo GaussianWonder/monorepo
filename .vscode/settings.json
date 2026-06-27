@@ -9,17 +9,18 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/Thumbs.db": true
+    "**/Thumbs.db": true,
   },
   "search.exclude": {
     "**/node_modules": true,
+    "**/bin": true,
     "**/dist": true,
     "**/lib": true,
     "**/out": true,
     "**/*.tsbuildinfo": true,
     ".moon/cache": true,
     ".moon/docker": true,
-    "**/*.code-search": true
+    "**/*.code-search": true,
   },
   "editor.formatOnType": false,
   "editor.formatOnPaste": true,
@@ -28,16 +29,16 @@
   "files.autoSave": "onFocusChange",
   "editor.codeActionsOnSave": {
     "source.organizeImports.biome": "always",
-    "source.fixAll.biome": "explicit"
+    "source.fixAll.biome": "explicit",
   },
   "[json]": {
     "editor.quickSuggestions": {
-      "strings": true
+      "strings": true,
     },
     "editor.suggest.insertMode": "replace",
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "biomejs.biome",
   },
   "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  }
+    "editor.defaultFormatter": "biomejs.biome",
+  },
 }

@@ -27,3 +27,8 @@ tasks:
     command: pnpm syncpack update --target latest
     options:
       runInCI: false
+
+  prepare-go:
+    script: "go install honnef.co/go/tools/cmd/staticcheck@latest"
+    options:
+      runInCI: true
