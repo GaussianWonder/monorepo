@@ -1,20 +1,21 @@
 {
   "name": "typescript-moon-example",
-  "version": "0.0.1",
   "description": "Typescript moon example",
-  "keywords": [],
+  "version": "0.0.1",
   "author": "Virghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)",
-  "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "2.4.4",
-    "@types/node": "^25.3.2",
+    "@biomejs/biome": "^2.5.1",
+    "@types/node": "^26.0.1",
+    "syncpack": "^15.3.2",
     "tsconfig-moon": "^1.4.2",
-    "tsdown": "0.21.0-beta.2",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "tsdown": "^0.22.0-beta.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   },
   "engines": {
-    "node": "25.7.0"
+    "node": "26.4.0"
   },
-  "packageManager": "pnpm@10.30.3"
+  "keywords": [],
+  "license": "ISC",
+  "packageManager": "pnpm@11.9.0"
 }

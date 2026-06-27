@@ -5,6 +5,7 @@ projects:
   - "apps/*"
   - "packages/*"
   - "infra/*"
+  - "tests/*"
   - "."
 
 pipeline:

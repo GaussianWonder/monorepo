@@ -1,6 +1,10 @@
 {
   "extends": "tsconfig-moon/tsconfig.projects.json",
   "compilerOptions": {
+    "target": "es2025",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": ["node"],
     "emitDeclarationOnly": false
   }
 }
