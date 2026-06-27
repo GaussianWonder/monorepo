@@ -5,6 +5,28 @@ Opinionated monorepo powered by [moon](https://moonrepo.dev/) and [proto](https:
 - **Primary focus: TypeScript** (Node 26, TypeScript 6)
 - **Secondary support: Go** (Go 1.26), **Rust** (Rust 1.96)
 
+- [Monorepo](#monorepo)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Quick Start](#quick-start)
+  - [Project Structure](#project-structure)
+  - [TypeScript Tooling](#typescript-tooling)
+    - [Build Pipeline](#build-pipeline)
+    - [Switching Runtime (Node or Bun)](#switching-runtime)
+    - [Apps vs Packages](#apps-vs-packages)
+    - [Bundling and Native Packages](#bundling-and-native-packages)
+      - [Containerization](#containerization)
+    - [TypeScript Configuration](#typescript-configuration)
+    - [Dependency Version Management](#dependency-version-management)
+  - [Project Templates](#project-templates)
+    - [TypeScript](#typescript)
+    - [Go](#go)
+    - [Rust](#rust)
+      - [Rust Tasks](#rust-tasks)
+  - [Prepare Tasks](#prepare-tasks)
+  - [Customization](#customization)
+    - [Before Using This Template](#before-using-this-template)
+
 ## Getting Started
 
 ### Prerequisites
@@ -20,18 +42,16 @@ Opinionated monorepo powered by [moon](https://moonrepo.dev/) and [proto](https:
 4. Install dependencies
    - `proto install`
    - `pnpm install`
-5. Prepare tooling
-   - Go: `moon run root:prepare-go`
-6. Sync configs: `moon sync config-schemas`
-7. Generate your first project:
+5. Sync configs: `moon sync config-schemas`
+6. Generate your first project:
    - TypeScript: `moon generate node-app` or `moon generate node-package`
    - Go: `moon generate go-app` or `moon generate go-package`
    - Rust: `moon generate rust-app` or `moon generate rust-package`
-8. Sync apps and packages: `moon sync`
+7. Sync apps and packages: `moon sync`
 
 ## Project Structure
 
-```
+```text
 apps/          # Applications (entry points, deployable artifacts)
 packages/      # Shared libraries (consumed by apps and other packages)
 infra/         # Infrastructure tooling
@@ -44,19 +64,36 @@ templates/     # Moon code generation templates
 
 ### Build Pipeline
 
-All TypeScript projects inherit shared tasks from `.moon/tasks/node.yml`. Source files live in `src/`, build output goes to `dist/`.
+TypeScript tasks are split across three files to support swappable runtimes:
 
-| Task         | Command                                    | Purpose                                          |
-| ------------ | ------------------------------------------ | ------------------------------------------------ |
-| `dev`        | `tsx src/index.ts`                         | Run from source with typechecking                |
-| `typecheck`  | `tsc --build`                              | Type checking with project references            |
-| `build`      | `tsdown --sourcemap`                       | Build with sourcemaps and type declarations      |
-| `bundle`     | `tsdown --sourcemap --minify --no-dts`     | Minified production bundle, no type declarations |
-| `start`      | `node --enable-source-maps dist/index.mjs` | Run the `build` output                           |
-| `start-prod` | `node --enable-source-maps dist/index.mjs` | Run the `bundle` output                          |
-| `check`      | `biome check --write`                      | Lint and format                                  |
+- **`javascript.yml`**: shared build tooling (tsdown, tsc, biome) inherited by all JS/TS projects
+- **`node.yml`**: runtime tasks (`dev`, `start`, `start-prod`) via `node`/`tsx`, tagged `node_runtime`
+- **`bun.yml`**: same runtime tasks via `bun`, tagged `bun_runtime`
+
+Source files live in `src/`, build output goes to `dist/`.
+
+| Task         | Command                                      | Source                 | Purpose                                          |
+| ------------ | -------------------------------------------- | ---------------------- | ------------------------------------------------ |
+| `typecheck`  | `tsc --build`                                | `javascript.yml`       | Type checking with project references            |
+| `build`      | `tsdown --sourcemap`                         | `javascript.yml`       | Build with sourcemaps and type declarations      |
+| `bundle`     | `tsdown --sourcemap --minify --no-dts`       | `javascript.yml`       | Minified production bundle, no type declarations |
+| `check`      | `biome check --write`                        | `javascript.yml`       | Lint and format                                  |
+| `dev`        | `tsx src/index.ts` / `bun src/index.ts`      | `node.yml` / `bun.yml` | Run from source with typechecking                |
+| `start`      | `node dist/index.mjs` / `bun dist/index.mjs` | `node.yml` / `bun.yml` | Run the `build` output                           |
+| `start-prod` | `node dist/index.mjs` / `bun dist/index.mjs` | `node.yml` / `bun.yml` | Run the `bundle` output                          |
 
 `start` and `start-prod` automatically build workspace dependencies (`^:build`) before running.
+
+### Switching Runtime
+
+Projects default to Node via the `node_runtime` tag in templates. To switch to Bun, change the tag in the project's `moon.yml`:
+
+```yaml
+tags:
+  - bun_runtime # instead of node_runtime
+```
+
+Build tooling (tsdown, tsc, biome) is shared, only the runtime commands (`dev`, `start`, `start-prod`) change.
 
 ### Apps vs Packages
 
@@ -98,11 +135,19 @@ Externalized packages must be declared in the app's `dependencies` so they are a
 
 Packages do not need any `tsdown` config. Dependencies listed in `package.json` `dependencies` are externalized by default.
 
+#### Containerization
+
+When deploying a bundled app, only externalized (native) packages need `node_modules` at runtime. To keep images small:
+
+1. Externalize native packages via `neverBundle`
+2. Create a `production.package.json` listing only externalized packages
+3. `pnpm install --prod` from that file in your Dockerfile
+
 ### TypeScript Configuration
 
 The tsconfig chain is:
 
-```
+```text
 tsconfig-moon/tsconfig.projects.json   (base: strict, composite, declarations)
   -> tsconfig.options.json             (overrides: es2025, nodenext, types: ["node"])
     -> <project>/tsconfig.json         (project-specific: rootDir, outDir)
