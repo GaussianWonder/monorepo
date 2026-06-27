@@ -8,8 +8,3 @@ language: "typescript"
 project:
   name: "{{ name }}"
   description: "{{ description }}"
-
-fileGroups:
-  sources:
-    - glob: "src/**/*"
-  tests: []

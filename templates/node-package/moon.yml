@@ -13,8 +13,3 @@ workspace:
   inheritedTasks:
     exclude:
       - bundle
-
-fileGroups:
-  sources:
-    - glob: "src/**/*"
-  tests: []

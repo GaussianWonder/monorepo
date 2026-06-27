@@ -1,0 +1,17 @@
+{
+  "semverGroups": [
+    {
+      "range": "^",
+      "dependencies": ["**"],
+      "packages": ["**"]
+    }
+  ],
+  "versionGroups": [
+    {
+      "label": "Use workspace protocol for local packages",
+      "dependencies": ["$LOCAL"],
+      "dependencyTypes": ["dev", "prod", "peer"],
+      "pinVersion": "workspace:*"
+    }
+  ]
+}

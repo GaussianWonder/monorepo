@@ -5,6 +5,13 @@ inheritedBy:
   languages: [javascript, typescript]
   toolchains: [node]
 
+fileGroups:
+  sources:
+    - glob: "src/**/*"
+  tests:
+    - glob: "tests/**/*"
+    - glob: "src/**/*.spec.ts"
+
 tasks:
   typecheck:
     script: tsc --build --pretty --verbose
@@ -22,10 +29,11 @@ tasks:
         optional: true
   build:
     command: "tsdown"
-    args: ["--target", "node25"]
+    args: ["--sourcemap", "--target", "node26"]
     type: build
     inputs:
       - "@globs(sources)"
+      - "package.json"
       - "tsconfig.json"
       - "tsconfig.*.json"
       - "/tsconfig.options.json"
@@ -33,20 +41,43 @@ tasks:
       - glob: "dist/**/*"
   bundle:
     command: tsdown
-    args: ["--sourcemap", "--minify", "--target", "node25"]
+    args: ["--sourcemap", "--minify", "--no-dts", "--target", "node26"]
     type: build
     inputs:
       - "@globs(sources)"
+      - "package.json"
       - "tsconfig.json"
       - "tsconfig.*.json"
       - "/tsconfig.options.json"
     outputs:
       - "dist/**/*"
+    options:
+      mergeArgs: append
   dev:
     command: tsx
     args: ["src/index.ts"]
     deps:
       - typecheck
+  start:
+    command: node
+    args: ["--enable-source-maps", "dist/index.mjs"]
+    deps:
+      - build
+      - "^:build"
+    env:
+      NODE_ENV: "production"
+    options:
+      runInCI: false
+  start-prod:
+    command: node
+    args: ["--enable-source-maps", "dist/index.mjs"]
+    deps:
+      - bundle
+      - "^:build"
+    env:
+      NODE_ENV: "production"
+    options:
+      runInCI: false
   check:
     command: biome
     args: ["check", "--write"]

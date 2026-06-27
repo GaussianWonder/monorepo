@@ -6,5 +6,10 @@
   "keywords": [],
   "author": "{{ author }}",
   "license": "{{ license }}",
-  "dependencies": {}
+  "dependencies": {},
+  "tsdown": {
+    "deps": {
+      "alwaysBundle": ["**"]
+    }
+  }
 }

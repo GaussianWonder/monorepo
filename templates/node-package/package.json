@@ -6,5 +6,11 @@
   "keywords": [],
   "author": "{{ author }}",
   "license": "{{ license }}",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    }
+  },
   "dependencies": {}
 }

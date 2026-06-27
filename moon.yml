@@ -6,3 +6,24 @@ id: root
 workspace:
   inheritedTasks:
     include: []
+
+tasks:
+  syncpack-check:
+    script: pnpm syncpack lint && pnpm syncpack format
+    options:
+      runInCI: true
+
+  syncpack-fix:
+    command: pnpm syncpack fix
+    options:
+      runInCI: false
+
+  syncpack-update:
+    command: pnpm syncpack update --target minor
+    options:
+      runInCI: false
+
+  syncpack-upgrade:
+    command: pnpm syncpack update --target latest
+    options:
+      runInCI: false
