@@ -22,3 +22,6 @@ assets/
 
 # go bin directory
 bin/
+
+# rust bin directory
+target/

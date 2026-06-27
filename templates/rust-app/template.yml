@@ -1,0 +1,17 @@
+title: "Rust Application"
+description: "Creates a new Rust application with moon configuration"
+destination: "apps/{{ name }}"
+
+variables:
+  name:
+    type: "string"
+    prompt: "Application name (use underscores, e.g. 'my_app')?"
+    required: true
+  description:
+    type: "string"
+    prompt: "What is the description of your application?"
+    required: true
+  author:
+    type: "string"
+    default: "Vîrghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)"
+    internal: true

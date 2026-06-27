@@ -2,6 +2,7 @@ node = "26.4.0"
 pnpm = "11.9.0"
 go = "1.26.4"
 moon = "2.3.4"
+rust = "1.96.0"
 
 [env]
 file = ".env"

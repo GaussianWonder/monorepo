@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=../cache/schemas/tasks.json
+$schema: "../cache/schemas/tasks.json"
+
+inheritedBy:
+  languages: [rust]
+  toolchains: [rust]
+
+fileGroups:
+  sources:
+    - glob: "src/**/*"
+    - file: "Cargo.toml"
+    - file: "/Cargo.lock"
+  tests:
+    - glob: "tests/**/*"
+    - glob: "benches/**/*"
+
+tasks:
+  build:
+    command: "cargo build"
+    type: build
+    inputs:
+      - "@globs(sources)"
+  dev:
+    command: "cargo run"
+    inputs:
+      - "@globs(sources)"
+  start:
+    command: "cargo run --release"
+    options:
+      runInCI: false
+  format:
+    command: "cargo fmt --check"
+    type: test
+    inputs:
+      - "@globs(sources)"
+      - "@globs(tests)"
+  lint:
+    command: "cargo clippy"
+    type: test
+    inputs:
+      - "@globs(sources)"
+      - "@globs(tests)"
+  check:
+    deps: ["lint", "format"]
+  test:
+    command: "cargo test"
+    type: test
+    inputs:
+      - "@globs(sources)"
+      - "@globs(tests)"
+  typecheck:
+    command: "cargo check"
+    type: build
+    inputs:
+      - "@globs(sources)"

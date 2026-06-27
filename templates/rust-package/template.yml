@@ -1,0 +1,17 @@
+title: "Rust Package"
+description: "Creates a new Rust library with moon configuration"
+destination: "packages/{{ name }}"
+
+variables:
+  name:
+    type: "string"
+    prompt: "Package name (use underscores, e.g. 'my_lib')?"
+    required: true
+  description:
+    type: "string"
+    prompt: "What is the description of your package?"
+    required: true
+  author:
+    type: "string"
+    default: "Vîrghileanu Teodor <teo.virghi@gmail.com> (https://github.com/GaussianWonder)"
+    internal: true

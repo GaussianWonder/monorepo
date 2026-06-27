@@ -3,7 +3,7 @@
 Opinionated monorepo powered by [moon](https://moonrepo.dev/) and [proto](https://moonrepo.dev/proto) with code generation templates, unified build pipelines, and dependency version management.
 
 - **Primary focus: TypeScript** (Node 26, TypeScript 6)
-- **Secondary support: Go** (Go 1.26)
+- **Secondary support: Go** (Go 1.26), **Rust** (Rust 1.96)
 
 ## Getting Started
 
@@ -26,6 +26,7 @@ Opinionated monorepo powered by [moon](https://moonrepo.dev/) and [proto](https:
 7. Generate your first project:
    - TypeScript: `moon generate node-app` or `moon generate node-package`
    - Go: `moon generate go-app` or `moon generate go-package`
+   - Rust: `moon generate rust-app` or `moon generate rust-package`
 8. Sync apps and packages: `moon sync`
 
 ## Project Structure
@@ -107,7 +108,7 @@ tsconfig-moon/tsconfig.projects.json   (base: strict, composite, declarations)
     -> <project>/tsconfig.json         (project-specific: rootDir, outDir)
 ```
 
-`@types/node` is installed at the root and made available to all projects via `types: ["node"]` in `tsconfig.options.json`. Projects that need different types (e.g. React, Next.js) can override `types` in their own `tsconfig.json` — the field fully replaces the parent.
+`@types/node` is installed at the root and made available to all projects via `types: ["node"]` in `tsconfig.options.json`. Projects that need different types (e.g. React, Next.js) can override `types` in their own `tsconfig.json`, the field fully replaces the parent.
 
 ### Dependency Version Management
 
@@ -151,6 +152,39 @@ go work use apps/yourgoappname
 # or
 go work use packages/yourgopackagename
 ```
+
+### Rust
+
+| Template       | Command                      | Creates                               |
+| -------------- | ---------------------------- | ------------------------------------- |
+| `rust-app`     | `moon generate rust-app`     | Binary crate with `main.rs`           |
+| `rust-package` | `moon generate rust-package` | Library crate with `lib.rs` and tests |
+
+Rust projects are automatically picked up by the root `Cargo.toml` workspace (globs `apps/*`, `packages/*`, `tests/*`). No manual registration needed.
+
+Use underscores for crate names (`my_app`, not `my-app`).
+
+To use a local package from an app, add it to `apps/my_app/Cargo.toml`:
+
+```toml
+[dependencies]
+my_lib = { path = "../../packages/my_lib" }
+```
+
+#### Rust Tasks
+
+| Task        | Command               | Purpose                   |
+| ----------- | --------------------- | ------------------------- |
+| `dev`       | `cargo run`           | Run from source (debug)   |
+| `build`     | `cargo build`         | Debug build               |
+| `start`     | `cargo run --release` | Optimized release run     |
+| `typecheck` | `cargo check`         | Fast type/borrow checking |
+| `lint`      | `cargo clippy`        | Linting                   |
+| `format`    | `cargo fmt --check`   | Format checking           |
+| `check`     | clippy + fmt          | Combined lint and format  |
+| `test`      | `cargo test`          | Run tests                 |
+
+No `bundle` task. `cargo build --release` already produces a single statically linked binary. Packages exclude `build`, `dev`, and `start`.
 
 ## Prepare Tasks
 
