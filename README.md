@@ -23,7 +23,6 @@ Opinionated monorepo powered by [moon](https://moonrepo.dev/) and [proto](https:
     - [Go](#go)
     - [Rust](#rust)
       - [Rust Tasks](#rust-tasks)
-  - [Prepare Tasks](#prepare-tasks)
   - [Customization](#customization)
     - [Before Using This Template](#before-using-this-template)
 
@@ -230,14 +229,6 @@ my_lib = { path = "../../packages/my_lib" }
 | `test`      | `cargo test`          | Run tests                 |
 
 No `bundle` task. `cargo build --release` already produces a single statically linked binary. Packages exclude `build`, `dev`, and `start`.
-
-## Prepare Tasks
-
-Root-level tasks that install language-specific tooling not managed by proto. Run once after cloning, or in CI before build steps.
-
-| Task         | Command                    | Installs                                                     |
-| ------------ | -------------------------- | ------------------------------------------------------------ |
-| `prepare-go` | `moon run root:prepare-go` | [staticcheck](https://staticcheck.dev/) (Go static analysis) |
 
 ## Customization
 
