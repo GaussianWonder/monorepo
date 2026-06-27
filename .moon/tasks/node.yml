@@ -30,6 +30,3 @@ tasks:
       NODE_ENV: "production"
     options:
       runInCI: false
-  check:
-    command: biome
-    args: ["check", "--write"]
