@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=../cache/schemas/tasks.json
+$schema: "../cache/schemas/tasks.json"
+
+inheritedBy:
+  languages: [javascript, typescript]
+  toolchains: [node, bun]
+  tags: [node_runtime, bun_runtime]
+
+fileGroups:
+  sources:
+    - glob: "src/**/*"
+  tests:
+    - glob: "tests/**/*"
+    - glob: "src/**/*.spec.ts"
+
+tasks:
+  typecheck:
+    script: tsc --build --pretty --verbose
+    type: build
+    inputs:
+      - "@globs(sources)"
+      - "@globs(tests)"
+      - "tsconfig.json"
+      - "tsconfig.*.json"
+      - "/tsconfig.options.json"
+    outputs:
+      - file: "tsconfig.tsbuildinfo"
+        optional: true
+      - glob: "lib/**/*"
+        optional: true
+  build:
+    command: "tsdown"
+    args: ["--sourcemap", "--target", "node26"]
+    type: build
+    inputs:
+      - "@globs(sources)"
+      - "package.json"
+      - "tsconfig.json"
+      - "tsconfig.*.json"
+      - "/tsconfig.options.json"
+    outputs:
+      - glob: "dist/**/*"
+  bundle:
+    command: tsdown
+    args: ["--sourcemap", "--minify", "--no-dts", "--target", "node26"]
+    type: build
+    inputs:
+      - "@globs(sources)"
+      - "package.json"
+      - "tsconfig.json"
+      - "tsconfig.*.json"
+      - "/tsconfig.options.json"
+    outputs:
+      - "dist/**/*"
+    options:
+      mergeArgs: append
+  check:
+    command: biome
+    args: ["check", "--write"]

@@ -2,16 +2,16 @@
 $schema: "../cache/schemas/tasks.json"
 
 inheritedBy:
-  tag: node_runtime
+  tag: bun_runtime
 
 tasks:
   dev:
-    command: tsx
+    command: bun
     args: ["src/index.ts"]
     deps:
       - typecheck
   start:
-    command: node
+    command: bun
     args: ["--enable-source-maps", "dist/index.mjs"]
     deps:
       - build
@@ -21,7 +21,7 @@ tasks:
     options:
       runInCI: false
   start-prod:
-    command: node
+    command: bun
     args: ["--enable-source-maps", "dist/index.mjs"]
     deps:
       - bundle

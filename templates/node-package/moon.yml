@@ -4,6 +4,8 @@ $schema: "../../.moon/cache/schemas/project.json"
 # stack: unknown
 layer: library
 language: "typescript"
+tags:
+  - node_runtime
 
 project:
   name: "{{ name }}"

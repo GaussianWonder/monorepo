@@ -1,3 +1,6 @@
+# yaml-language-server: $schema=../cache/schemas/tasks.json
+$schema: "../cache/schemas/tasks.json"
+
 fileGroups:
   configs:
     - "*.config.{js,cjs,mjs,ts}"
