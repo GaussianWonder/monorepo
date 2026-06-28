@@ -204,7 +204,17 @@ go work use packages/yourgopackagename
 | `rust-app`     | `moon generate rust-app`     | Binary crate with `main.rs`           |
 | `rust-package` | `moon generate rust-package` | Library crate with `lib.rs` and tests |
 
-Rust projects are automatically picked up by the root `Cargo.toml` workspace (globs `apps/*`, `packages/*`, `tests/*`). No manual registration needed.
+After generating a Rust project, add it to the `members` list in the root `Cargo.toml`:
+
+```toml
+[workspace]
+members = [
+  "apps/my_app",
+  "packages/my_lib",
+]
+```
+
+Cargo workspace globs are not used because not all directories under `apps/` or `packages/` contain a `Cargo.toml` — members must be registered manually.
 
 Use underscores for crate names (`my_app`, not `my-app`).
 

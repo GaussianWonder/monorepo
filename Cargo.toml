@@ -1,7 +1,11 @@
 [workspace]
 resolver = "3"
 members = [
-  "apps/*",
-  "packages/*",
-  "tests/*",
+  # rust expects all entries to have a cargo.toml.
+  # in this monorepo setup, that's not a requirement,
+  # so members cannot be defined with glob syntax.
+  # add it yourself.
+  # "apps/*",
+  # "packages/*",
+  # "tests/*",
 ]
